@@ -1,8 +1,14 @@
 package ir.co.isc.academy.g1.diskgame;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class ArrayOperations {
+    private final static Logger LOGGER = LoggerFactory.getLogger(ArrayOperations.class);
 
     public static Tuple getRowDuplicates(DiskBoard diskBoard) {
+        LOGGER.info("Checking for duplicate elements in rows");
+
         System.out.println("row called");
         int rowDupCounter = 1;
         String rowDupString = "";
@@ -22,6 +28,7 @@ public class ArrayOperations {
     }
 
     public static Tuple getColDuplicates(DiskBoard diskBoard) {
+        LOGGER.info("Checking for duplicate elements in columns");
         System.out.println("col called");
         int colDupCounter = 1;
         String colDupString = "";
@@ -42,6 +49,7 @@ public class ArrayOperations {
     }
 
     public static boolean isColumnFull(String[][] array, int colNum) {
+        LOGGER.info("Checking to see if column has empty spot");
         boolean result = false;
         for (int row = 0; row < 6; row++) {
             if (array[row][colNum - 1].equals("-")) break;
