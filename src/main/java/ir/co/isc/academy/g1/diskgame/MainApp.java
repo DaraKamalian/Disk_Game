@@ -11,35 +11,47 @@ public class MainApp {
         System.out.println("Player 2: Green");
 
         int playerTurn = 1;
+        Color playerColor = Color.R;
         GameField.setupField();
         while (true) {
-            System.out.print("Player" + playerTurn + " Column:");
+            System.out.print("Player " + playerColor + " Column:");
 
             int tempCol = scanner.nextInt();
-            if (GameField.validateColumn(tempCol - 1)) {
-                if (playerTurn % 2 == 1) {
-                    Player.fillPosition(Color.R, GameField.getEmptyRow(tempCol - 1));
-                } else {
-                    Player.fillPosition(Color.G, GameField.getEmptyRow(tempCol - 1));
+            if (!ArrayOperations.isColumnFull(GameField.positions, tempCol)) {
+                if (GameField.validateColumn(tempCol - 1)) {
+                    if (playerTurn % 2 == 1) {
+                        Player.fillPosition(Color.R, GameField.getEmptyRow(tempCol - 1));
+                    } else {
+                        Player.fillPosition(Color.G, GameField.getEmptyRow(tempCol - 1));
+                    }
                 }
-            }
 
-            GameField.displayField();
+                GameField.displayField();
 
-            if (!ArrayOperations.getRowDuplicates(GameField.positions).equals("")) {
-                System.out.println("winner " + ArrayOperations.getRowDuplicates(GameField.positions));
-                break;
-            } else if (!ArrayOperations.getColDuplicates(GameField.positions).equals("")) {
-                System.out.println("winner " + ArrayOperations.getColDuplicates(GameField.positions));
-                break;
-            }
-            if(GameField.isGameDraw(GameField.positions)){
-                System.out.println("Game Has No Winner");
-                break;
-            }
-            playerTurn++;
-            if (playerTurn % 2 == 0) playerTurn = 2;
-            else playerTurn = 1;
+                if (!GameField.getWinner().equals("") && GameField.getWinner().equals("R")) {
+                    System.out.println("Winner is: Player1");
+                    break;
+                } else if (!GameField.getWinner().equals("") && GameField.getWinner().equals("G")) {
+                    System.out.println("Winner is: Player2");
+                    break;
+                }
+
+
+                if (GameField.isGameDraw(GameField.positions)) {
+                    System.out.println("Game Has No Winner");
+                    break;
+                }
+                playerTurn++;
+                if (playerTurn % 2 == 0) {
+                    playerColor = Color.G;
+                    playerTurn = 2;
+                } else {
+                    playerTurn = 1;
+                    playerColor = Color.R;
+                }
+
+            } else System.out.println("Column is Full! ");
+
         }
 
     }

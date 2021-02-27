@@ -4,6 +4,17 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 public class GameField {
+    public String[][] field;
+    public int row;
+    public int column;
+
+    public GameField(String[][] field, int column, int row){
+        this.column = column;
+        this.row = row;
+        this.field = field;
+    }
+
+
     public static String[][] positions = new String[6][7];
     public static String winner;
 
@@ -25,15 +36,15 @@ public class GameField {
 
     public static boolean validateColumn(int colNum) {
 
-        if(colNum >= 0 && colNum <= 6){
+        if (colNum >= 0 && colNum <= 6) {
             return true;
-        }else {
+        } else {
             throw new UnsupportedOperationException("Column Number should be between 1 and 7");
         }
     }
 
     public static boolean isPositionEmpty(int x, int y) {
-        return positions[x][y] == "-";
+        return positions[x][y].equals("-");
     }
 
     public static Location getEmptyRow(int colNum) {
@@ -60,6 +71,26 @@ public class GameField {
             }
         }
         return flag;
+    }
+
+    public static String getWinner() {
+        if (!ArrayOperations.getRowDuplicates(GameField.positions).equals("-")) {
+            return ArrayOperations.getRowDuplicates(GameField.positions);
+        } else if (!ArrayOperations.getColDuplicates(GameField.positions).equals("-")) {
+            return ArrayOperations.getColDuplicates(GameField.positions);
+        } else if (!ArrayOperations.getDiagonalDuplicates(GameField.positions).equals("-")) {
+            return ArrayOperations.getDiagonalDuplicates(GameField.positions);
+        } else return "";
+    }
+
+    public static int getNumberOfDiscs() {
+        int counter = 0;
+        for (int row = 0; row < 6; row++) {
+            for (int col = 0; col < 7; col++) {
+                if (!positions[row][col].equals("-")) counter++;
+            }
+        }
+        return counter;
     }
 }
 

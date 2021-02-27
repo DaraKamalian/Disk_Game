@@ -41,5 +41,30 @@ public class ArrayOperations {
         return colDupString;
     }
 
+    public static String getDiagonalDuplicates(String[][] array) {
+        int diagDupCounter = 0;
+        String diagColString = "";
+        for (int row = 0; row < 5; row++) {
+            for (int col = 6; col > 1; col--) {
+                if (array[row][col].equals(array[row + 1][col - 1]) && !array[row][col].equals("-")) {
+                    diagDupCounter++;
+                    if (diagDupCounter == 3) {
+                        diagColString = array[row][col];
+                        break;
+                    }
+                }
+            }
 
+        }
+        return diagColString;
+    }
+
+    public static boolean isColumnFull(String[][] array, int colNum) {
+        boolean result = false;
+        for (int row = 0; row < 6; row++) {
+            if(array[row][colNum-1].equals("-")) break;
+            else result = true;
+        }
+        return result;
+    }
 }
